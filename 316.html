@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>316 — Moda con propósito</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --black:#181512;
+    --charcoal:#3B3630;
+    --taupe:#A6907E;
+    --tan:#D9C4AC;
+    --cream:#EDE4D3;
+    --paper:#F8F4EB;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Inter', sans-serif;
+    background:var(--paper);
+    color:var(--black);
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.serif{font-family:'Playfair Display', serif;}
+  a{text-decoration:none; color:inherit;}
+  img{max-width:100%; display:block;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 32px;}
+
+  /* ---------- NAV ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(248,244,235,0.94);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid rgba(24,21,18,0.08);
+  }
+  nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:20px 32px; max-width:1180px; margin:0 auto;
+  }
+  .logo{display:flex; align-items:center; gap:9px; font-size:26px; font-weight:600; letter-spacing:1px;}
+  .logo svg{width:16px; height:28px;}
+  .navlinks{display:flex; gap:36px; font-size:14px; font-weight:500; letter-spacing:.3px; text-transform:uppercase;}
+  .navlinks a{position:relative; padding:4px 0; transition:color .2s; color:var(--charcoal);}
+  .navlinks a:hover{color:var(--black);}
+  .navlinks a::after{content:'';position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--taupe);transition:width .25s;}
+  .navlinks a:hover::after{width:100%;}
+  .cta-btn{
+    background:var(--black); color:var(--cream); padding:12px 26px;
+    border-radius:2px; font-weight:500; font-size:13px; letter-spacing:1px; text-transform:uppercase;
+    transition:background .2s;
+  }
+  .cta-btn:hover{background:var(--charcoal);}
+  .menu-toggle{display:none; font-size:26px; background:none; border:none; cursor:pointer; color:var(--black);}
+
+  /* ---------- HERO (fondo de prendas) ---------- */
+  .hero{
+    position:relative;
+    min-height:640px;
+    display:flex; align-items:center;
+    background-image: linear-gradient(180deg, rgba(24,21,18,0.35) 0%, rgba(24,21,18,0.72) 65%, rgba(24,21,18,0.92) 100%), url('https://images.pexels.com/photos/8581058/pexels-photo-8581058.jpeg?auto=compress&cs=tinysrgb&w=1920');
+    background-size:cover; background-position:center;
+    color:var(--cream);
+    padding:120px 32px 80px;
+  }
+  .hero-inner{max-width:1180px; margin:0 auto; position:relative; z-index:2; max-width:620px;}
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    border:1px solid rgba(237,228,211,0.4);
+    padding:7px 16px; font-size:12px; letter-spacing:2px;
+    text-transform:uppercase; margin-bottom:28px; font-weight:500; color:var(--tan);
+  }
+  .hero h1{
+    font-size:clamp(52px, 7vw, 92px); line-height:.96; font-weight:600; margin-bottom:20px; letter-spacing:-1px;
+  }
+  .hero h1 em{font-style:italic; color:var(--tan); font-weight:400;}
+  .hero p{font-size:18px; line-height:1.65; max-width:480px; opacity:.88; margin-bottom:36px; font-weight:400;}
+  .hero-ctas{display:flex; gap:16px; flex-wrap:wrap;}
+  .btn-tan{
+    background:var(--tan); color:var(--black); padding:15px 32px; border-radius:2px;
+    font-weight:600; font-size:13px; letter-spacing:1px; text-transform:uppercase;
+    transition:background .2s;
+  }
+  .btn-tan:hover{background:var(--cream);}
+  .btn-outline{
+    border:1px solid rgba(237,228,211,0.55); padding:14px 30px; border-radius:2px;
+    font-weight:500; font-size:13px; letter-spacing:1px; text-transform:uppercase; transition:.2s;
+  }
+  .btn-outline:hover{background:rgba(237,228,211,0.1); border-color:var(--cream);}
+
+  /* ---------- MARQUEE STRIP ---------- */
+  .marquee{
+    background:var(--black); color:var(--tan); padding:15px 0; overflow:hidden;
+    white-space:nowrap; font-size:13px; font-weight:500; letter-spacing:2px;
+  }
+  .marquee-track{display:inline-block; animation:scroll 28s linear infinite;}
+  .marquee span{margin:0 26px; text-transform:uppercase;}
+  .marquee span.dot{color:var(--taupe);}
+  @keyframes scroll{from{transform:translateX(0);} to{transform:translateX(-50%);}}
+
+  /* ---------- VERSE SECTION ---------- */
+  .verse-section{padding:110px 32px; background:var(--paper);}
+  .verse-grid{display:grid; grid-template-columns:.8fr 1.2fr; gap:70px; align-items:center;}
+  .verse-label{font-size:12px; letter-spacing:2.5px; text-transform:uppercase; color:var(--taupe); font-weight:600; margin-bottom:20px;}
+  .verse-section h2{font-size:clamp(32px,3.4vw,44px); line-height:1.18; margin-bottom:24px; color:var(--black); font-weight:500;}
+  .verse-section p.lead{font-size:16px; line-height:1.8; color:var(--charcoal); max-width:480px;}
+  .verse-quote{
+    background:var(--cream); border-left:3px solid var(--black);
+    padding:48px 50px; font-family:'Playfair Display', serif; font-style:italic; font-size:22px; line-height:1.65;
+    color:var(--black); position:relative;
+  }
+  .verse-quote cite{display:block; font-style:normal; font-weight:600; font-size:13px; margin-top:24px; color:var(--taupe); letter-spacing:1px; text-transform:uppercase;}
+
+  /* ---------- DIVIDER ---------- */
+  .divider{
+    display:flex; align-items:center; justify-content:center; gap:18px;
+    padding:20px 32px; background:var(--paper);
+  }
+  .divider .line{flex:1; max-width:220px; height:1px; background:linear-gradient(90deg, transparent, var(--taupe), transparent);}
+  .divider svg{width:14px; height:24px;}
+
+  /* ---------- FONDO DE PRENDAS / GALERIA ---------- */
+  .gallery-band{
+    position:relative; padding:130px 32px; color:var(--cream); text-align:center;
+    background-image: linear-gradient(0deg, rgba(24,21,18,0.82), rgba(24,21,18,0.82)), url('https://images.pexels.com/photos/8581406/pexels-photo-8581406.jpeg?auto=compress&cs=tinysrgb&w=1920');
+    background-size:cover; background-position:center; background-attachment:fixed;
+  }
+  .gallery-band .verse-label{color:var(--tan); justify-content:center; display:flex;}
+  .gallery-band h2{font-size:clamp(32px,4vw,48px); max-width:620px; margin:0 auto 20px; line-height:1.2; font-weight:500;}
+  .gallery-band p{max-width:480px; margin:0 auto; opacity:.82; font-size:15px; line-height:1.7;}
+
+  /* ---------- ALL AGES SECTION ---------- */
+  .ages-section{padding:100px 32px; background:var(--cream);}
+  .ages-header{text-align:center; max-width:640px; margin:0 auto 60px;}
+  .ages-header h2{font-size:clamp(32px,3.6vw,44px); line-height:1.18; color:var(--black); font-weight:500;}
+  .ages-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:20px;}
+  .age-card{
+    background:var(--paper); border:1px solid rgba(24,21,18,0.08);
+    padding:36px 22px; text-align:center; transition:.25s;
+  }
+  .age-card:hover{border-color:var(--taupe); transform:translateY(-4px);}
+  .age-card .icon{
+    width:52px; height:52px; margin:0 auto 20px; border-radius:50%;
+    background:var(--black); display:flex; align-items:center; justify-content:center;
+    font-size:20px; font-weight:600; color:var(--cream); font-family:'Playfair Display';
+  }
+  .age-card h3{font-size:17px; margin-bottom:9px; font-weight:600; font-family:'Inter'; color:var(--black);}
+  .age-card p{font-size:14px; line-height:1.55; color:var(--charcoal);}
+
+  /* ---------- PRODUCTS ---------- */
+  .products-section{padding:110px 32px; background:var(--paper);}
+  .section-header{display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:56px; gap:30px; flex-wrap:wrap;}
+  .section-header h2{font-size:clamp(32px,3.6vw,44px); color:var(--black); line-height:1.18; font-weight:500;}
+  .section-header p{max-width:340px; color:var(--charcoal); font-size:15px; line-height:1.6;}
+  .products-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:24px;}
+  .product-card{
+    background:var(--paper); overflow:hidden; border:1px solid rgba(24,21,18,0.08);
+    transition:.3s;
+  }
+  .product-card:hover{transform:translateY(-6px); box-shadow:0 20px 40px rgba(24,21,18,0.15);}
+  .product-thumb{
+    height:260px; position:relative; overflow:hidden; background:var(--tan);
+  }
+  .product-thumb img{width:100%; height:100%; object-fit:cover; transition:transform .5s;}
+  .product-card:hover .product-thumb img{transform:scale(1.06);}
+  .product-thumb .tag-overlay{
+    position:absolute; top:14px; left:14px; background:rgba(24,21,18,0.85); color:var(--tan);
+    font-size:10px; letter-spacing:1.4px; text-transform:uppercase; padding:6px 12px; font-weight:600;
+  }
+  .product-info{padding:20px 20px 24px;}
+  .product-info h3{font-size:16px; font-weight:600; font-family:'Inter'; margin-bottom:6px; color:var(--black);}
+  .product-info .desc{font-size:13px; color:var(--charcoal); margin-bottom:14px;}
+  .product-info .price-row{display:flex; align-items:center; justify-content:space-between;}
+  .product-info .price{font-size:17px; font-weight:600; color:var(--black); font-family:'Playfair Display';}
+  .add-btn{
+    background:none; color:var(--black); border:1px solid var(--black); width:36px; height:36px; border-radius:50%;
+    font-size:18px; cursor:pointer; transition:.2s; display:flex; align-items:center; justify-content:center;
+  }
+  .add-btn:hover{background:var(--black); color:var(--cream);}
+
+  /* ---------- TESTIMONIOS ---------- */
+  .testimonials{padding:110px 32px; background:var(--cream);}
+  .test-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px;}
+  .test-card{
+    background:var(--paper); padding:34px; position:relative; border:1px solid rgba(24,21,18,0.06);
+  }
+  .test-card .stars{color:var(--taupe); font-size:15px; margin-bottom:18px; letter-spacing:2px;}
+  .test-card p{font-size:15px; line-height:1.65; color:var(--charcoal); margin-bottom:22px;}
+  .test-who{display:flex; align-items:center; gap:12px;}
+  .avatar{width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:600; color:var(--cream); font-size:13px; background:var(--black); font-family:'Playfair Display';}
+  .test-who .name{font-weight:600; font-size:14px; color:var(--black);}
+  .test-who .role{font-size:12px; color:var(--taupe);}
+
+  /* ---------- CTA ---------- */
+  .cta-section{
+    position:relative; padding:100px 50px; text-align:center; color:var(--cream);
+    background-image: linear-gradient(0deg, rgba(24,21,18,0.88), rgba(24,21,18,0.88)), url('https://images.pexels.com/photos/8580765/pexels-photo-8580765.jpeg?auto=compress&cs=tinysrgb&w=1920');
+    background-size:cover; background-position:center;
+  }
+  .cta-section h2{font-size:clamp(32px,4vw,48px); margin-bottom:18px; line-height:1.18; font-weight:500;}
+  .cta-section p{max-width:520px; margin:0 auto 36px; font-size:16px; opacity:.85; line-height:1.6;}
+  .form-row{display:flex; gap:10px; justify-content:center; max-width:440px; margin:0 auto; flex-wrap:wrap;}
+  .form-row input{
+    flex:1; min-width:220px; padding:15px 20px; border-radius:2px; border:1px solid rgba(237,228,211,0.3);
+    font-size:14px; font-family:'Inter'; background:rgba(237,228,211,0.08); color:var(--cream);
+  }
+  .form-row input::placeholder{color:rgba(237,228,211,0.55);}
+  .form-row button{
+    background:var(--tan); color:var(--black); border:none; padding:15px 30px; border-radius:2px;
+    font-weight:600; font-size:13px; letter-spacing:1px; text-transform:uppercase; cursor:pointer; transition:.2s;
+  }
+  .form-row button:hover{background:var(--cream);}
+  .form-note{font-size:12px; opacity:.6; margin-top:16px;}
+
+  /* ---------- FOOTER ---------- */
+  footer{background:var(--black); color:var(--tan); padding:70px 32px 30px;}
+  .footer-grid{display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:50px; margin-bottom:50px;}
+  .footer-logo{display:flex; align-items:center; gap:9px; font-family:'Playfair Display'; font-size:24px; font-weight:600; margin-bottom:16px; color:var(--cream);}
+  footer p.desc{font-size:14px; line-height:1.6; opacity:.75; max-width:280px;}
+  footer h4{font-size:12px; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:20px; color:var(--cream); font-weight:600;}
+  footer ul{list-style:none;}
+  footer ul li{margin-bottom:12px; font-size:14px; opacity:.8;}
+  footer ul li a:hover{color:var(--cream); opacity:1;}
+  .footer-bottom{
+    border-top:1px solid rgba(237,228,211,0.12); padding-top:26px; display:flex;
+    justify-content:space-between; flex-wrap:wrap; gap:14px; font-size:13px; opacity:.55;
+  }
+
+  @media(max-width:900px){
+    .navlinks{display:none;}
+    .menu-toggle{display:block;}
+    .verse-grid{grid-template-columns:1fr; gap:36px;}
+    .ages-grid{grid-template-columns:repeat(2,1fr);}
+    .products-grid{grid-template-columns:repeat(2,1fr);}
+    .test-grid{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr 1fr;}
+    .gallery-band{background-attachment:scroll;}
+  }
+  @media(max-width:520px){
+    .ages-grid{grid-template-columns:1fr;}
+    .products-grid{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <div class="logo">
+      <svg viewBox="0 0 24 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2 L12 38 M12 6 C7 8 5 11 12 13 C19 11 17 8 12 6 M12 12 C7 14 5 17 12 19 C19 17 17 14 12 12 M12 18 C7 20 5 23 12 25 C19 23 17 20 12 18" stroke="#181512" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+      316
+    </div>
+    <div class="navlinks">
+      <a href="#coleccion">Colección</a>
+      <a href="#historia">Historia</a>
+      <a href="#familia">Familia</a>
+      <a href="#opiniones">Opiniones</a>
+    </div>
+    <a href="#coleccion" class="cta-btn">Comprar</a>
+    <button class="menu-toggle" aria-label="Menú">☰</button>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Nueva colección de temporada</div>
+    <h1>Viste tu fe<br><em>para toda la vida</em></h1>
+    <p>Ropa y accesorios cristianos con diseño atemporal, inspirados en Juan 3:16. De niños a abuelos: en 316 hay una prenda para cada generación de tu familia.</p>
+    <div class="hero-ctas">
+      <a href="#coleccion" class="btn-tan">Ver colección</a>
+      <a href="#historia" class="btn-outline">Nuestra historia</a>
+    </div>
+  </div>
+</section>
+
+<div class="marquee">
+  <div class="marquee-track">
+    <span>Hoodies</span><span class="dot">•</span><span>Suéteres</span><span class="dot">•</span><span>Gorras</span><span class="dot">•</span><span>Tote bags</span><span class="dot">•</span><span>Para toda la familia</span><span class="dot">•</span>
+    <span>Hoodies</span><span class="dot">•</span><span>Suéteres</span><span class="dot">•</span><span>Gorras</span><span class="dot">•</span><span>Tote bags</span><span class="dot">•</span><span>Para toda la familia</span><span class="dot">•</span>
+  </div>
+</div>
+
+<section class="verse-section" id="historia">
+  <div class="wrap verse-grid">
+    <div>
+      <div class="verse-label">Nuestra historia</div>
+      <h2>Un número, un versículo, un propósito</h2>
+      <p class="lead">316 nació de un versículo que cambió vidas por generaciones: Juan 3:16. No es una marca solo para jóvenes — es para toda persona que quiere llevar su fe con orgullo, sin importar su edad. Cada prenda es sencilla, atemporal y esencial.</p>
+    </div>
+    <div class="verse-quote">
+      Porque de tal manera amó Dios al mundo, que ha dado a su Hijo unigénito, para que todo aquel que en él cree, no se pierda, mas tenga vida eterna.
+      <cite>Juan 3:16 · Reina-Valera</cite>
+    </div>
+  </div>
+</section>
+
+<div class="divider">
+  <div class="line"></div>
+  <svg viewBox="0 0 24 40" fill="none"><path d="M12 2 L12 38 M12 6 C7 8 5 11 12 13 C19 11 17 8 12 6 M12 12 C7 14 5 17 12 19 C19 17 17 14 12 12 M12 18 C7 20 5 23 12 25 C19 23 17 20 12 18" stroke="#A6907E" stroke-width="1.6" stroke-linecap="round"/></svg>
+  <div class="line"></div>
+</div>
+
+<section class="gallery-band">
+  <div class="verse-label">Hecho para durar</div>
+  <h2>Sencillez, calidad y autenticidad en cada prenda</h2>
+  <p>Diseñamos piezas atemporales, pensadas para acompañarte todos los días — no una moda pasajera, sino un símbolo que se lleva con el paso de los años.</p>
+</section>
+
+<section class="ages-section" id="familia">
+  <div class="wrap">
+    <div class="ages-header">
+      <div class="verse-label">Para toda la familia</div>
+      <h2>Una marca que crece contigo, no solo con tu edad</h2>
+    </div>
+    <div class="ages-grid">
+      <div class="age-card">
+        <div class="icon">K</div>
+        <h3>Niños</h3>
+        <p>Tallas suaves y cómodas para los más pequeños de la casa.</p>
+      </div>
+      <div class="age-card">
+        <div class="icon">J</div>
+        <h3>Jóvenes</h3>
+        <p>Diseños versátiles que se usan en la calle, la escuela y el grupo de jóvenes.</p>
+      </div>
+      <div class="age-card">
+        <div class="icon">A</div>
+        <h3>Adultos</h3>
+        <p>Piezas atemporales para el trabajo, la iglesia o el fin de semana.</p>
+      </div>
+      <div class="age-card">
+        <div class="icon">M</div>
+        <h3>Mayores</h3>
+        <p>Cortes cómodos y clásicos, pensados para toda la vida.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="products-section" id="coleccion">
+  <div class="wrap">
+    <div class="section-header">
+      <h2>Colección destacada</h2>
+      <p>Piezas atemporales pensadas para acompañarte todos los días, sin importar tu edad o etapa de vida.</p>
+    </div>
+    <div class="products-grid">
+      <div class="product-card">
+        <div class="product-thumb">
+          <span class="tag-overlay">Más vendido</span>
+          <img src="https://images.pexels.com/photos/7760243/pexels-photo-7760243.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Suéter beige 316">
+        </div>
+        <div class="product-info">
+          <h3>Suéter clásico 316</h3>
+          <div class="desc">Punto suave, tono beige natural</div>
+          <div class="price-row"><span class="price">$42</span><button class="add-btn">+</button></div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-thumb">
+          <span class="tag-overlay">Nuevo</span>
+          <img src="https://images.pexels.com/photos/8580765/pexels-photo-8580765.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Prendas neutras 316">
+        </div>
+        <div class="product-info">
+          <h3>Cápsula tonos neutros</h3>
+          <div class="desc">Camisetas y hoodies en beige y marrón</div>
+          <div class="price-row"><span class="price">$28</span><button class="add-btn">+</button></div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-thumb">
+          <span class="tag-overlay">Unisex</span>
+          <img src="https://images.pexels.com/photos/8581406/pexels-photo-8581406.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Prendas colgadas 316">
+        </div>
+        <div class="product-info">
+          <h3>Colección esencial</h3>
+          <div class="desc">Cortes clásicos en tonos tierra</div>
+          <div class="price-row"><span class="price">$36</span><button class="add-btn">+</button></div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-thumb">
+          <span class="tag-overlay">Familiar</span>
+          <img src="https://images.pexels.com/photos/8148587/pexels-photo-8148587.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Tote bag 316">
+        </div>
+        <div class="product-info">
+          <h3>Tote bag versículo</h3>
+          <div class="desc">Lienzo natural, correas reforzadas</div>
+          <div class="price-row"><span class="price">$18</span><button class="add-btn">+</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="testimonials" id="opiniones">
+  <div class="wrap">
+    <div class="section-header">
+      <h2>Familias que ya visten 316</h2>
+      <p>Historias reales de nuestra comunidad, de todas las edades.</p>
+    </div>
+    <div class="test-grid">
+      <div class="test-card">
+        <div class="stars">★★★★★</div>
+        <p>Compré suéteres para mí y para mi mamá de 68 años. A las dos nos encantó, la calidad es excelente.</p>
+        <div class="test-who"><div class="avatar">MG</div><div><div class="name">María González</div><div class="role">Cliente desde 2023</div></div></div>
+      </div>
+      <div class="test-card">
+        <div class="stars">★★★★★</div>
+        <p>Pensé que era solo para jóvenes, pero mi esposo de 55 años usa su hoodie 316 cada semana.</p>
+        <div class="test-who"><div class="avatar">RT</div><div><div class="name">Rosa Torres</div><div class="role">Cliente frecuente</div></div></div>
+      </div>
+      <div class="test-card">
+        <div class="stars">★★★★★</div>
+        <p>Le regalé la tote bag a mi abuelo y ahora quiere comprar más para toda la familia.</p>
+        <div class="test-who"><div class="avatar">DP</div><div><div class="name">David Pérez</div><div class="role">Cliente nuevo</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <h2>Sé parte de la familia 316</h2>
+  <p>Recibe nuevos lanzamientos, promociones exclusivas y contenido de fe directamente en tu correo.</p>
+  <form class="form-row" onsubmit="event.preventDefault(); this.querySelector('button').textContent='¡Gracias!';">
+    <input type="email" placeholder="tu@correo.com" required>
+    <button type="submit">Suscribirme</button>
+  </form>
+  <div class="form-note">Sin spam. Cancela cuando quieras.</div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">
+          <svg viewBox="0 0 24 40" width="14" height="24" fill="none"><path d="M12 2 L12 38 M12 6 C7 8 5 11 12 13 C19 11 17 8 12 6 M12 12 C7 14 5 17 12 19 C19 17 17 14 12 12 M12 18 C7 20 5 23 12 25 C19 23 17 20 12 18" stroke="#EDE4D3" stroke-width="1.6" stroke-linecap="round"/></svg>
+          316
+        </div>
+        <p class="desc">Moda cristiana para toda la familia. Inspirados en Juan 3:16, hecha para acompañarte en cada etapa de la vida.</p>
+      </div>
+      <div>
+        <h4>Tienda</h4>
+        <ul>
+          <li><a href="#coleccion">Suéteres</a></li>
+          <li><a href="#coleccion">Cápsula neutra</a></li>
+          <li><a href="#coleccion">Colección esencial</a></li>
+          <li><a href="#coleccion">Accesorios</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Marca</h4>
+        <ul>
+          <li><a href="#historia">Nuestra historia</a></li>
+          <li><a href="#familia">Para la familia</a></li>
+          <li><a href="#opiniones">Opiniones</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contacto</h4>
+        <ul>
+          <li>hola@316tienda.com</li>
+          <li>@316.tienda</li>
+          <li>Envíos a todo el país</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 316. Todos los derechos reservados.</span>
+      <span>Juan 3:16 · Sencillez · Calidad · Autenticidad</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
